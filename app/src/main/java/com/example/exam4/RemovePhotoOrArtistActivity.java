@@ -30,13 +30,23 @@ public class RemovePhotoOrArtistActivity extends AppCompatActivity  implements  
         setContentView(R.layout.activity_remove_photo_or_artist);
         spinner_artist=findViewById(R.id.spinner_artist);
         spinner_photo=findViewById(R.id.spinner_photo);
+        delete_photo=findViewById(R.id.btn_delete_photo);
         db=new DBHelper(this);
         delete_artist=findViewById(R.id.btn_delete_artist);
+
+
 
         delete_artist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 delete_artist_details();
+            }
+        });
+        
+        delete_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                delete_photo_details();
             }
         });
 
@@ -57,7 +67,14 @@ public class RemovePhotoOrArtistActivity extends AppCompatActivity  implements  
             artist_names[i]=cu.getString(1);
             i++;
         }
+        spinner_artist.setOnItemSelectedListener(RemovePhotoOrArtistActivity.this);
+        ArrayAdapter adapter1 = new ArrayAdapter(this,android.R.layout.simple_spinner_item,artist_names);
+// Specify the layout to use when the list of choices appears
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        spinner_artist.setAdapter(adapter1);
 
+//get photo names
         Cursor cu1=db.getPhotos_Names();
         int j1 = 0;
         while(cu1.moveToNext()){
@@ -76,19 +93,27 @@ public class RemovePhotoOrArtistActivity extends AppCompatActivity  implements  
             i1++;
         }
 
-        spinner_artist.setOnItemSelectedListener(RemovePhotoOrArtistActivity.this);
-        ArrayAdapter adapter1 = new ArrayAdapter(this,android.R.layout.simple_spinner_item,artist_names);
-// Specify the layout to use when the list of choices appears
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
-        spinner_artist.setAdapter(adapter1);
+
 
         spinner_photo.setOnItemSelectedListener(RemovePhotoOrArtistActivity.this);
         ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,photos_names);
 // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
-        spinner_artist.setAdapter(adapter);
+        spinner_photo.setAdapter(adapter);
+
+    }
+
+    private void delete_photo_details() {
+        boolean isDeleted=db.deleteDetails(photo_name,"photo");
+        if(isDeleted){
+            Toast.makeText(RemovePhotoOrArtistActivity.this,"sucessfullly deleted",Toast.LENGTH_SHORT).show();
+            Intent intent =new Intent(RemovePhotoOrArtistActivity.this,RemovePhotoOrArtistActivity.class);
+            startActivity(intent);
+        }
+        else{
+            Toast.makeText(RemovePhotoOrArtistActivity.this,"cannot delete",Toast.LENGTH_SHORT).show();
+        }
 
     }
 
