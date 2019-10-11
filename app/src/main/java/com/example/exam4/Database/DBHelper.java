@@ -76,13 +76,15 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public ArrayList<Photograph> get_photographs(){
+    public ArrayList<Photograph> searchphotographs(String artname){
         SQLiteDatabase db=getReadableDatabase();
         ArrayList<Photograph> list=new ArrayList<>();
 
-        String [] selection={ArtistMaster.Photographs.COLUMN_ARTIST_ID,ArtistMaster.Photographs.IMAGE};
+        String [] projection={ArtistMaster.Photographs.COLUMN_ARTIST_ID,ArtistMaster.Photographs.IMAGE};
+        String selection = ArtistMaster.Photographs.COLUMN_ARTIST_ID + " = ?";
+        String[] selectionArgs = { artname };
 
-        Cursor cu= db.query(ArtistMaster.Photographs.TABLE_NAME,selection,null,null,null,null,null);
+        Cursor cu= db.query(ArtistMaster.Photographs.TABLE_NAME,projection,selection,selectionArgs,null,null,null);
 
         while(cu.moveToNext()){
             Photograph photograph=new Photograph();
@@ -107,6 +109,28 @@ public class DBHelper extends SQLiteOpenHelper {
 
         long isAddeed=db.insert(ArtistMaster.Photographs.TABLE_NAME,null,values);
         return(isAddeed > 0);
+    }
+
+    public boolean deleteDetails(String name,String value){
+        // Define 'where' part of query.
+        if(value.equals("artist")) {
+            SQLiteDatabase db = getWritableDatabase();
+            String selection = ArtistMaster.Artists.COLUMN_NAME_ARTIST_NAME + " = ?";
+// Specify arguments in placeholder order.
+            String[] selectionArgs = {name};
+// Issue SQL statement.
+            int deletedRows = db.delete(ArtistMaster.Artists.TABLE_NAME, selection, selectionArgs);
+            return (deletedRows > 0);
+        }
+        else{
+            SQLiteDatabase db = getWritableDatabase();
+            String selection = ArtistMaster.Photographs.COLUMN_NAME_PHOTO_NAME + " = ?";
+// Specify arguments in placeholder order.
+            String[] selectionArgs = {name};
+// Issue SQL statement.
+            int deletedRows = db.delete(ArtistMaster.Photographs.TABLE_NAME, selection, selectionArgs);
+            return (deletedRows > 0);
+        }
     }
 
 

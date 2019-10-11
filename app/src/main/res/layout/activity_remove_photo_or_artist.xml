@@ -55,14 +55,14 @@
 
         <Button
             android:textAllCaps="false"
-            android:id="@+id/button2"
+            android:id="@+id/btn_delete_photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:text="@string/delete_photo" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btn_delete_artist"
             android:textAllCaps="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
