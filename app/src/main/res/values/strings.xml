@@ -14,4 +14,5 @@
     <string name="delete_artist">Delete Artist</string>
     <string name="artist_name">Artist Name</string>
     <string name="search">Search</string>
+    <string name="photo_category1">photo category</string>
 </resources>

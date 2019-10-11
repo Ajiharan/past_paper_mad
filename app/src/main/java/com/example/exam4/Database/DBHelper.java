@@ -8,7 +8,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.exam4.model.Artist;
+
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class DBHelper extends SQLiteOpenHelper {
     private static final String DBNAME="photodesign.db";
@@ -58,27 +61,30 @@ public class DBHelper extends SQLiteOpenHelper {
         return(isAddeed > 0);
     }
 
-    public String[] getArtist_Names(){
+    public Cursor getArtist_Names(){
         SQLiteDatabase db=getReadableDatabase();
 
         String [] selection={ArtistMaster.Artists.COLUMN_NAME_ID,ArtistMaster.Artists.COLUMN_NAME_ARTIST_NAME};
 
        Cursor cu= db.query(ArtistMaster.Artists.TABLE_NAME,selection,null,null,null,null,null);
-       int i = 0;
-       while (cu.moveToNext()){
-          // ArtistNames[i]=cu.getString(1);
-           i++;
-       }
-        String []ArtistNames=new String[i];
-       cu.close();
-        cu= db.query(ArtistMaster.Artists.TABLE_NAME,selection,null,null,null,null,null);
+        return cu;
 
-        int j = 0;
-        while (cu.moveToNext()){
-            ArtistNames[j]=cu.getString(1);
-            j++;
-        }
 
-       return  ArtistNames;
+
     }
+
+    public boolean addPhotograph(String photo_name,String artist_id,String photo_cat,byte[] image ){
+        SQLiteDatabase db=getWritableDatabase();
+        ContentValues values=new ContentValues();
+        values.put(ArtistMaster.Photographs.COLUMN_NAME_PHOTO_NAME,photo_name);
+        values.put(ArtistMaster.Photographs.PHOTO_CATEGORY,photo_cat);
+        values.put(ArtistMaster.Photographs.IMAGE,image);
+        values.put(ArtistMaster.Photographs.COLUMN_ARTIST_ID,artist_id);
+
+        long isAddeed=db.insert(ArtistMaster.Photographs.TABLE_NAME,null,values);
+        return(isAddeed > 0);
+    }
+
+
+
 }

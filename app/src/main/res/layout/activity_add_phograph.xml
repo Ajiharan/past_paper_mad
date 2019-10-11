@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:text="photo category" />
+            android:text="@string/photo_category1" />
 
         <Spinner
             android:id="@+id/txt_photo_category"
