@@ -76,6 +76,18 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    public Cursor getPhotos_Names(){
+        SQLiteDatabase db=getReadableDatabase();
+
+        String [] selection={ArtistMaster.Photographs.COLUMN_NAME_ID,ArtistMaster.Photographs.COLUMN_NAME_PHOTO_NAME};
+
+        Cursor cu= db.query(ArtistMaster.Photographs.TABLE_NAME,selection,null,null,null,null,null);
+        return cu;
+
+
+
+    }
+
     public ArrayList<Photograph> searchphotographs(String artname){
         SQLiteDatabase db=getReadableDatabase();
         ArrayList<Photograph> list=new ArrayList<>();
