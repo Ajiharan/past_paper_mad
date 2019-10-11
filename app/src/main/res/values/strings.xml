@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Exam4</string>
+    <string name="add_artist">Add Artist</string>
+
+    <string name="delete_artist_photograph">Delete Artist/Photograph</string>
+    <string name="view_photograph_list">View Photograph list</string>
+
+
+    <string name="add_photograph">Add photograph</string>
+    <string name="photograph">Photograph</string>
+    <string name="photo_name">Photo Name</string>
+
+    <string name="delete_photo">Delete Photo</string>
+    <string name="delete_artist">Delete Artist</string>
+    <string name="artist_name">Artist Name</string>
+    <string name="search">Search</string>
+</resources>
