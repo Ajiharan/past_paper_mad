@@ -5,10 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import androidx.annotation.Nullable;
 
 import com.example.exam4.model.Artist;
+import com.example.exam4.model.Photograph;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -69,6 +72,27 @@ public class DBHelper extends SQLiteOpenHelper {
        Cursor cu= db.query(ArtistMaster.Artists.TABLE_NAME,selection,null,null,null,null,null);
         return cu;
 
+
+
+    }
+
+    public ArrayList<Photograph> get_photographs(){
+        SQLiteDatabase db=getReadableDatabase();
+        ArrayList<Photograph> list=new ArrayList<>();
+
+        String [] selection={ArtistMaster.Photographs.COLUMN_ARTIST_ID,ArtistMaster.Photographs.IMAGE};
+
+        Cursor cu= db.query(ArtistMaster.Photographs.TABLE_NAME,selection,null,null,null,null,null);
+
+        while(cu.moveToNext()){
+            Photograph photograph=new Photograph();
+            Bitmap bitmap;
+            bitmap= BitmapFactory.decodeByteArray(cu.getBlob(1),0,cu.getBlob(1).length);
+            photograph.setBitmap(bitmap);
+            list.add(photograph);
+
+        }
+        return list;
 
 
     }
